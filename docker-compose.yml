@@ -1,0 +1,63 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cic_digital_postgres
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-cic} -d ${POSTGRES_DB:-cic_digital}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - cic_network
+
+  api:
+    build: .
+    container_name: cic_digital_api
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    environment:
+      - PYTHONUNBUFFERED=1
+      # Na rede Docker o Postgres escuta em 5432; POSTGRES_PORT no .env é só mapeamento no host.
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+
+    ports:
+      - "${API_PORT:-8000}:8000"
+
+    volumes:
+      - .:/app
+
+    command: uvicorn cic_digital.main:app --host 0.0.0.0 --port 8000 --reload
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - cic_network
+
+volumes:
+  postgres_data:
+
+networks:
+  cic_network:
+    driver: bridge

@@ -1,0 +1,30 @@
+[project]
+name = "cic-digital"
+version = "0.1.0"
+description = "API de leitura do Catecismo da Igreja Católica"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.32,<1",
+    "sqlalchemy>=2.0,<3",
+    "alembic>=1.14,<2",
+    "psycopg2-binary>=2.9,<3",
+    "python-dotenv>=1.0,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8,<9",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
