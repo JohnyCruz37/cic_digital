@@ -1,5 +1,6 @@
 docs/
 Insert-data/
+scripts/
 .env
 .venv/
 venv/
