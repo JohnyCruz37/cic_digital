@@ -1,14 +1,10 @@
-"""Aplicação FastAPI — ponto de entrada (health até implementação do núcleo /v1)."""
+"""Ponto de entrada — uvicorn cic_digital.main:app"""
 
-from fastapi import FastAPI
+from cic_digital.core.config import settings
+from cic_digital.core.logger import setup_logger
 
-app = FastAPI(
-    title="CIC Digital",
-    description="API de leitura do Catecismo da Igreja Católica",
-    version="0.1.0",
-)
+setup_logger(level=settings.log_level, log_file=settings.log_file)
 
+from cic_digital.api.factory import create_app
 
-@app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok"}
+app = create_app()

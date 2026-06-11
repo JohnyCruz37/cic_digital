@@ -6,16 +6,16 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool, text
 
 from cic_digital.core.config import settings
-from cic_digital.persistence.base import Base
-from cic_digital.persistence import models  # noqa: F401 — register metadata
-from cic_digital.persistence.constants import CONTENT_SCHEMA
+from cic_digital.models.base import Base
+from cic_digital.models import content  # noqa: F401 — register metadata
+from cic_digital.models.constants import CONTENT_SCHEMA
 
 config = context.config
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url", settings.database_url)
+config.set_main_option("sqlalchemy.url", settings.database.url)
 
 target_metadata = Base.metadata
 

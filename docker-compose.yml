@@ -39,6 +39,9 @@ services:
       # Na rede Docker o Postgres escuta em 5432; POSTGRES_PORT no .env é só mapeamento no host.
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
+      - APP_ENV=development
+      - LOG_LEVEL=INFO
+      - LOG_FILE=logs/app.log
 
     ports:
       - "${API_PORT:-8000}:8000"
@@ -46,7 +49,12 @@ services:
     volumes:
       - .:/app
 
-    command: uvicorn cic_digital.main:app --host 0.0.0.0 --port 8000 --reload
+    command: >
+      uvicorn cic_digital.main:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+      --log-level critical
 
     depends_on:
       postgres:

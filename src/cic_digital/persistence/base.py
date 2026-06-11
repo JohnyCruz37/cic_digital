@@ -1,5 +1,5 @@
-from sqlalchemy.orm import DeclarativeBase
+"""Compatibilidade — use cic_digital.models.base."""
 
+from cic_digital.models.base import Base
 
-class Base(DeclarativeBase):
-    pass
+__all__ = ["Base"]

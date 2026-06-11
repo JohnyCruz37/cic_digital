@@ -1,5 +1,15 @@
-CONTENT_SCHEMA = "content"
-TEXT_FORMAT_HTML = "html"
+"""Compatibilidade — use cic_digital.models.constants."""
 
-PART_KIND_PROLOGUE = "prologue"
-PART_KIND_PART = "part"
+from cic_digital.models.constants import (
+    CONTENT_SCHEMA,
+    PART_KIND_PART,
+    PART_KIND_PROLOGUE,
+    TEXT_FORMAT_HTML,
+)
+
+__all__ = [
+    "CONTENT_SCHEMA",
+    "PART_KIND_PART",
+    "PART_KIND_PROLOGUE",
+    "TEXT_FORMAT_HTML",
+]

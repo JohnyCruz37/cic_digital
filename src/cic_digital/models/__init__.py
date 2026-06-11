@@ -1,5 +1,3 @@
-"""Compatibilidade — use cic_digital.models."""
-
 from cic_digital.models.content import (
     Article,
     ArticleGroup,
